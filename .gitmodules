@@ -1,3 +1,6 @@
 [submodule "nestjs-api"]
 	path = nestjs-api
 	url = https://github.com/DanieldeAlmeida2024/nestjs-api
+[submodule "next-frontend"]
+	path = next-frontend
+	url = ./next-frontend
