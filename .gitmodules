@@ -7,3 +7,6 @@
 [submodule "golang-simulador"]
 	path = golang-simulador
 	url = https://github.com/DanieldeAlmeida2024/golang-simulator
+[submodule "kafka"]
+	path = kafka
+	url = https://github.com/DanieldeAlmeida2024/kafka
