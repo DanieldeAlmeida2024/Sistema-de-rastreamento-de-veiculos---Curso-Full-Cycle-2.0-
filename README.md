@@ -23,7 +23,17 @@ Se você estiver no Windows, use o WSL 2. Veja nosso tutorial [https://github.co
 
 ## Rodar a aplicação
 
-Ao final das aulas teremos todo o projeto, no momento estamos na aula 01 do Nest.js, então, acessar a pasta `nestjs-api` e siga as instruções.
+Rode todas as aplicações com o comando:
+
+```bash
+docker-compose up -d
+```
+
+Este comando irá subir todos os containers necessários para rodar todo o projeto
+
+Acesse as pastas `golang-simulator`, `nestjs-api` e `next-frontend` e siga as instruções.
+
+Como você já vai ter rodado todos os containers com o comando acima, mas instruções pule o passo de *levantar os containers*
 
 
 ## Arquitetura do projeto

@@ -4,3 +4,6 @@
 [submodule "next-frontend"]
 	path = next-frontend
 	url = https://github.com/DanieldeAlmeida2024/next-frontend
+[submodule "golang-simulador"]
+	path = golang-simulador
+	url = https://github.com/DanieldeAlmeida2024/golang-simulator
