@@ -1,0 +1,19 @@
+@startuml
+package "Workspace rastreamento" {
+node "next-frontend (submódulo)" as Front
+node "nestjs-api (submódulo)" as API
+node "golang-simulador (submódulo)" as Go
+queue "kafka (submódulo)" as Kafka
+node "mongodb/ Compose local" as DB
+}
+Front --> API : HTTP / WebSocket
+API --> DB
+API --> Kafka : route
+Kafka --> Go : route
+Go --> Kafka : freight/simulation
+note bottom
+Path .gitmodules = golang-simulador
+Compose include = golang-simulator
+Incompatibilidade a validar.
+end note
+@enduml
