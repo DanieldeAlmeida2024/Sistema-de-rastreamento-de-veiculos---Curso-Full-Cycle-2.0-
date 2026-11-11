@@ -66,3 +66,7 @@ Como você já vai ter rodado todos os containers com o comando acima, mas instr
 ## Arquitetura do projeto
 
 ![alt text](./arquitetura_projeto.png)
+
+## Documentação técnica por projeto (v1.0.0)
+
+[Projeto](docs/projeto/ESPECIFICACAO.md) · [UML](docs/uml/README.md) · [Testes](docs/testes/PLANO_DE_TESTES.md) · [Versões](docs/controle/VERSIONAMENTO.md)
