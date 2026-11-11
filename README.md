@@ -1,3 +1,30 @@
+# Sistema-de-rastreamento-de-veiculos---Curso-Full-Cycle-2.0-
+
+Projeto de estudo Full Cycle que orquestra simulador, API e frontend de rastreamento.
+
+## Stack
+Docker Compose, Go, NestJS, Next.js, Kafka e MongoDB.
+
+## Primeira verificação
+```bash
+docker compose config
+```
+
+Os comandos exigem ambiente apropriado e não foram executados aqui.
+
+## Onde começar
+docker-compose.yaml, .gitmodules, mongodb/.
+
+## Cuidados
+Este repositório depende de submódulos e serviços relacionados. Não assumir que Docker Compose é seguro para produção.
+
+## Documentos
+[Requisitos](docs/REQUISITOS.md) · [Arquitetura](docs/ARQUITETURA.md) · [UML](docs/UML.puml) · [Plano de testes](docs/PLANO_TESTES.md) · [Contexto IA](AGENTS.md).
+
+---
+
+## Documentação original preservada
+
 # Imersão Fullcycle 20 - Sistema de rastreamento de veículos
 
 ![Imersão Full Stack && Full Cycle](https://events-fullcycle.s3.amazonaws.com/events-fullcycle/static/site/img/grupo_4417.png)
