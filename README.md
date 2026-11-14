@@ -68,3 +68,9 @@ O Next.js agora compartilha a **mesma** `ROUTES_API_KEY` do NestJS como variáve
 Como não há login/autorização por usuário neste laboratório, o Compose define `ALLOW_UNAUTHENTICATED_ROUTE_DEMO=true` explicitamente **apenas para o ambiente local**. A porta do Next permanece vinculada a `127.0.0.1:3001` e a do Nest a `127.0.0.1:3000`. Nunca reutilize esse sinalizador num deploy público; substitua por autenticação e permissões por recurso.
 
 O submódulo `next-frontend/` foi atualizado para a versão com validação de IDs, tratamento de erros upstream, ausência de cache compartilhado e testes de contrato. Use `git submodule update --init --recursive` para obter o commit pinado.
+
+## Publicação de eventos compatíveis com o simulador
+
+O submódulo `kafka/` agora inclui `publicar-rastreamento`, um comando Python que gera `RouteCreated` e `DeliveryStarted` **no contrato nativo que o Go Simulator consome**. O publicador genérico anterior continua disponível apenas para estudo independente: seu envelope `tipo/dados` não deve ser enviado ao tópico `route` do simulador em execução.
+
+O teste do repositório pai verifica os limites de **600 pontos** em NestJS, Kafka Python e Go, e o teto de **256 KiB** no parser. Confira a sintaxe e exemplos em [kafka/README.md](kafka/README.md) após sincronizar os submódulos. Não execute eventos experimentais em sistemas de terceiros nem associe os exemplos a operações reais de entrega.

@@ -34,3 +34,10 @@
 - O modo de demonstração de rotas sem login é habilitado deliberadamente **somente nesta stack local**, cuja exposição ao host permanece em loopback.
 - Workflow Compose verifica alinhamento do segredo entre os dois serviços e o flag local, além de portas e contratos Kafka anteriores.
 - Continuam pendentes autenticação por operador, Socket.IO autorizado e testes E2E reais.
+
+## TRACK-COMPOSE 1.4.0 — gitlink Kafka nativo (14/11/2026)
+
+- Gitlink `kafka/` atualizado para `a4b1cc83f7baf72734e7786af2fa9b5a56dfffdb` com publicador `RouteCreated`/`DeliveryStarted` nativo.
+- Incluídas regressões de contrato `TRACK-C10` a `TRACK-C14` sobre o código efetivamente pinado, sem Kafka real.
+- Mantidos os pins NestJS, Go e Next.js da revisão anterior e todas as portas em loopback.
+- Não são alterados tópicos, segurança de rede, volumes, fluxos de entrega ou serviços já em execução.
