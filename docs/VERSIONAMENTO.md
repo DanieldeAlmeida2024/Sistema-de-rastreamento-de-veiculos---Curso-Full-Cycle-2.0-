@@ -18,3 +18,11 @@
 - Documentos iniciais descreviam apenas arquitetura conceitual.
 
 **Sem deploy:** esta revisão não levanta os serviços nem altera volumes/bancos reais.
+
+## TRACK-COMPOSE 1.2.0 — contrato de eventos e pins (14/11/2026)
+
+- Gitlink `nestjs-api/` atualizado para `d65bff1ad1578321346015fc4d07a2ce47b051b5` (validação Google Maps antes de persistir/publicar).
+- Gitlink `golang-simulador/` atualizado para `0cb1073df2d477e8d5796728e7b1c831325c9ee3` (limites de eventos/pontos e rejeição pré-publicação).
+- Mantidos pins Next.js e Kafka, volumes e configuração Compose anterior.
+- Adicionada regressão automática dos limites cruzados em `tests/test_kafka_route_contract.py`.
+- Nenhuma modificação da infraestrutura ou execução de E2E, nenhum deploy. Falha Kafka depois de uma persistência ainda requer outbox/idempotência.
