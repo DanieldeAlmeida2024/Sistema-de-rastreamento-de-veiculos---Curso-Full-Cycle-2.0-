@@ -79,6 +79,16 @@ class RouteBudgetContractTests(unittest.TestCase):
         self.assertEqual(data, {"event": "DeliveryStarted", "route_id": "route-1"})
         self.assertIn("DeliveryStarted", self.hub)
 
+    def test_kafka_generic_events_are_isolated_from_go_topics(self):
+        from pathlib import Path
+        events = (ROOT / "kafka/mensageria/eventos.py").read_text(encoding="utf-8")
+        self.assertIn("TOPICOS_PERMITIDOS = frozenset({'laboratorio'})", events)
+        for topic in ("route", "freight", "simulation"):
+            self.assertIn(topic, events)
+        compose = (ROOT / "kafka/docker-compose.yaml").read_text(encoding="utf-8")
+        self.assertIn("--topic laboratorio", compose)
+        self.assertIn("criar_evento(args.topico", self.kafka_cli)
+
     def test_kafka_route_budget_is_shared_across_three_components(self):
         producer_limit = constant(self.producer, r"MAX_ROUTE_SIMULATION_POINTS\s*=\s*(\d+)")
         go_limit = constant(self.simulator, r"const\s+MaxRoutePoints\s*=\s*(\d+)")

@@ -22,3 +22,7 @@ A matriz separa observações do código de hipóteses de aceite. Execute primei
 ## Conciliação de versões — 14/11/2026
 
 O submódulo `next-frontend` foi atualizado do commit `89b66a5` para `4fd5fa7`, 2 commits de documentação, para refletir a arquitetura e os testes atuais. Os SHAs de NestJS, Go e Kafka já correspondiam às suas branches principais; ver `docs/integracao/SUBMODULOS.md`. O fluxo completo Kafka→Go→NestJS→Next ainda requer homologação real e não é validado apenas por `docker compose config`.
+
+## Contrato de isolamento Kafka — 14/11/2026
+
+Novo SYS-11: os eventos genéricos do laboratório devem usar somente o tópico `laboratorio`, com tópico criado no Compose e teste do contrato fixado em `tests/test_kafka_route_contract.py`. O produtor nativo `publicar-rastreamento` continua enviando a `route` com JSON compatível com Go. O CI dos submódulos Kafka e do orquestrador verificam esta regra; **não** há teste completo com broker, DLQ nem retentativas de produção.
