@@ -1,0 +1,14 @@
+@startuml
+actor Operador
+participant "Git submodule" as Git
+participant "Docker Compose root" as Compose
+participant "golang-simulador/compose.yaml" as G
+Operador -> Git : update --init --recursive
+Git --> Operador : checkout submódulos
+Operador -> Compose : docker compose config
+Compose -> G : include ./golang-simulator/compose.yaml
+note right of G
+Inconsistência entre path real
+do submódulo e include.
+end note
+@enduml
