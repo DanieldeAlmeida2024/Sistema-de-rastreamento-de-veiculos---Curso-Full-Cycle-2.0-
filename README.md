@@ -74,3 +74,9 @@ O submódulo `next-frontend/` foi atualizado para a versão com validação de I
 O submódulo `kafka/` agora inclui `publicar-rastreamento`, um comando Python que gera `RouteCreated` e `DeliveryStarted` **no contrato nativo que o Go Simulator consome**. O publicador genérico anterior continua disponível apenas para estudo independente: seu envelope `tipo/dados` não deve ser enviado ao tópico `route` do simulador em execução.
 
 O teste do repositório pai verifica os limites de **600 pontos** em NestJS, Kafka Python e Go, e o teto de **256 KiB** no parser. Confira a sintaxe e exemplos em [kafka/README.md](kafka/README.md) após sincronizar os submódulos. Não execute eventos experimentais em sistemas de terceiros nem associe os exemplos a operações reais de entrega.
+
+## Modelagem específica e diagramas para estudo
+
+[Especificação de referência](docs/projeto/ESPECIFICACAO.md) · [Matriz histórica](docs/testes/PLANO_DE_TESTES.md) · [UML e sequências](docs/uml/README.md).
+
+Esses arquivos preservam o desenho original; os contratos de código, integrações, credenciais e CI atuais estão nos documentos principais de arquitetura e testes deste repositório.
