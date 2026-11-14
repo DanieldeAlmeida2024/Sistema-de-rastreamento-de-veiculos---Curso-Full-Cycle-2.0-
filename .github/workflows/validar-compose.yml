@@ -13,6 +13,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Conferir estrutura de gitlinks
         run: |
           test -f golang-simulador/compose.yaml
@@ -28,3 +31,31 @@ jobs:
           docker compose -f docker-compose.yaml config --quiet
           docker compose -f docker-compose.yaml config --services | sort | tee /tmp/services.txt
           for service in simulator nest next mongo kafka; do grep -qx "$service" /tmp/services.txt; done
+
+      - name: Verificar portas locais e comandos declarados
+        env:
+          ROUTES_API_KEY: teste-somente-ci-32-caracteres-minimo-1234567890
+          GOOGLE_MAPS_API_KEY: ""
+        run: |
+          docker compose -f docker-compose.yaml config --format json > /tmp/track-compose.json
+          python - <<'PY'
+          import json
+          data = json.load(open("/tmp/track-compose.json", encoding="utf-8"))
+          services = data["services"]
+          for service in ("mongo", "kafka", "control-center", "nest", "next"):
+              for port in services[service].get("ports", []):
+                  assert port["host_ip"] == "127.0.0.1", (
+                      f"{service} expõe porta além de localhost: {port}"
+                  )
+          expected = {
+              "simulator": "go run ./cmd/simulator",
+              "nest": "npm run start:dev",
+              "next": "npm run dev",
+          }
+          for service, command in expected.items():
+              current = services[service]["command"]
+              raw = " ".join(current) if isinstance(current, list) else current
+              assert command in raw, f"{service}: comando ausente"
+              assert "tail -f /dev/null" not in raw, f"{service}: contêiner ocioso"
+          print("Compose: portas de host em localhost e três processos de app definidos.")
+          PY
