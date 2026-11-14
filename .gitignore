@@ -1,0 +1,6 @@
+# A chave real de rotas e o token Maps são fornecidos fora do Git.
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store
