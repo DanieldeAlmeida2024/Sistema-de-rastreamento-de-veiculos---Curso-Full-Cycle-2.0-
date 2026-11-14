@@ -11,3 +11,7 @@ Versão **1.0.0** publicada em PR, base `c41f00bb2a1e7adcaaf44176125dfd23ae87314
 | Sistema-de-rastreamento-de-veiculos---Curso-Full-Cycle-2.0--TST | [Testes](../testes/PLANO_DE_TESTES.md) | 1.0.0 |
 
 MAJOR para quebra de interfaces, MINOR para fluxo/contrato novo e PATCH para documentação. Cada alteração deve registrar a referência Git e atualizar o diagrama afetado e o teste rastreável.
+
+## Reconciliação de diagramas — 14/11/2026
+
+Recuperadas especificação histórica, matriz de casos e UML original, mantendo toda a configuração e os testes vigentes da `main`. A documentação antiga foi identificada como material de referência, não como evidência de homologação.
