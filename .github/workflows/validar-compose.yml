@@ -23,6 +23,8 @@ jobs:
           test -f next-frontend/docker-compose.yaml
           test -f kafka/docker-compose.yaml
           git submodule status
+      - name: Verificar limite de pontos e orçamento Kafka entre NestJS e Go
+        run: python -m unittest discover -s tests -p 'test_kafka_route_contract.py' -v
       - name: Validar sintaxe, paths e configuração sem iniciar serviços
         env:
           ROUTES_API_KEY: teste-somente-ci-32-caracteres-minimo-1234567890
