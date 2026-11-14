@@ -1,6 +1,6 @@
 # Arquitetura — sistema Full Cycle de rastreamento
 
-Versão TRACK-COMPOSE 1.1.0 · 14/11/2026.
+Versão TRACK-COMPOSE 1.2.0 · 14/11/2026.
 
 ## Estrutura realmente versionada
 
@@ -8,8 +8,8 @@ O repositório pai é um **orquestrador de quatro submódulos Git**, mais MongoD
 
 | Diretório | Responsabilidade | Pin desta revisão |
 | --- | --- | --- |
-| `nestjs-api/` | API REST, Google Maps, eventos e Socket.IO | `a6c9f69c54f7` |
-| `golang-simulador/` | Eventos de frete/posição e consumidor Kafka | `a33d35f12651` |
+| `nestjs-api/` | API REST, Google Maps, eventos e Socket.IO | `d65bff1ad157` |
+| `golang-simulador/` | Eventos de frete/posição e consumidor Kafka | `0cb1073df2d4` |
 | `next-frontend/` | Páginas de rotas e mapas Next.js/React | `3093a5a2e884` |
 | `kafka/` | Kafka + ZooKeeper + ferramentas de desenvolvimento | `059c9095bdb0` |
 | `mongodb/` | MongoDB local com replica set de nó único | Arquivos neste repo |
@@ -33,3 +33,14 @@ O endereço da API **interno** à rede Docker é `http://nest:3000`. O endereço
 O MongoDB do laboratório usa credenciais **root/root** do material didático. O Kafka usa listeners PLAINTEXT e uma console sem autenticação, agora com portas externas limitadas a 127.0.0.1; esta topologia **não é segura para produção nem para rede compartilhada**. Bloqueie as portas no firewall e use redes internas dedicadas. A chave `ROUTES_API_KEY` é exigida no `.env` local e não é versionada; chave Google Maps precisa de restrição por domínio/referrer.
 
 A CI valida a estrutura de submódulos e a **configuração declarativa** do Compose. Ela **não sobe contêineres nem executa GPS/Google Maps/Kafka/Mongo E2E**. Os subprojetos incluem comandos de desenvolvimento; possíveis mudanças de API/versões devem ser homologadas com a infraestrutura ligada.
+
+## Orçamento Kafka compartilhado pelo produtor e consumidor
+
+Nesta revisão, os gitlinks de **NestJS** e **Go Simulator** apontam aos commits já integrados nas respectivas branches `main`:
+
+- NestJS: `d65bff1ad1578321346015fc4d07a2ce47b051b5`.
+- Go Simulator: `0cb1073df2d477e8d5796728e7b1c831325c9ee3`.
+
+O produtor `RoutesService.create` valida o retorno de Google Directions antes de gravar dados e publica no máximo 600 coordenadas (300 etapas). O simulador recusa eventos JSON acima de 256 KiB e rotas acima de 600 pontos. Rotas inválidas ou excessivamente extensas precisam ser rejeitadas, corrigidas ou futuramente segmentadas. A verificação `tests/test_kafka_route_contract.py` impede divergência silenciosa desses limites nos submódulos fixados.
+
+Essa checagem é estática; **não** executa Kafka/Mongo reais nem prova a entrega de eventos entre os processos.
