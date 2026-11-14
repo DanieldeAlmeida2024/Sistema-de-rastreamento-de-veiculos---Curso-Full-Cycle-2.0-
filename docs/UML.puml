@@ -1,10 +1,27 @@
 @startuml
-title Sistema-de-rastreamento-de-veiculos---Curso-Full-Cycle-2.0- - componentes conceituais
-actor Operador
-component Entrada
-component Aplicacao
-component Infraestrutura
-Operador --> Entrada
-Entrada --> Aplicacao
-Aplicacao --> Infraestrutura
+title Full Cycle — orquestração local com submódulos
+actor "Desenvolvedor" as Dev
+component "docker-compose.yaml (raiz)" as Root
+component "next-frontend\n:3001 localhost" as Next
+component "nestjs-api\n:3000 localhost" as Nest
+component "golang-simulador" as Go
+queue "Kafka\n:9092 rede Docker" as Kafka
+database "MongoDB\n:27017 localhost" as Mongo
+cloud "Google Maps APIs" as Maps
+Dev --> Root : docker compose up -d
+Root --> Next : executa npm/Next
+Root --> Nest : executa npm/Nest
+Root --> Go : executa go run
+Next --> Nest : rotas REST (rede Docker)
+Next ..> Maps : Maps JavaScript
+Nest --> Mongo : Prisma
+Nest --> Kafka : eventos
+Go --> Kafka : consome/produz
+Go --> Mongo : rotas/posições
+note bottom of Root
+  CI valida somente configuração.
+  Serviços externos não homologados.
+  Mongo root/root e Kafka PLAINTEXT:
+  laboratório local, NÃO produção.
+end note
 @enduml
