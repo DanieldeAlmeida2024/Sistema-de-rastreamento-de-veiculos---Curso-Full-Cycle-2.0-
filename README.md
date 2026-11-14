@@ -1,25 +1,46 @@
-# Sistema-de-rastreamento-de-veiculos---Curso-Full-Cycle-2.0-
+# Rastreamento de veículos — orquestrador Full Cycle
 
-Projeto de estudo Full Cycle que orquestra simulador, API e frontend de rastreamento.
+Projeto de laboratório com **Go, NestJS, Next.js, Kafka e MongoDB**. O repositório raiz organiza os submódulos Git do frontend, backend, simulador e Kafka, além de fornecer o MongoDB local.
 
-## Stack
-Docker Compose, Go, NestJS, Next.js, Kafka e MongoDB.
+## Clonar e preparar
 
-## Primeira verificação
 ```bash
-docker compose config
+git clone --recurse-submodules https://github.com/DanieldeAlmeida2024/Sistema-de-rastreamento-de-veiculos---Curso-Full-Cycle-2.0-.git
+cd Sistema-de-rastreamento-de-veiculos---Curso-Full-Cycle-2.0-
+git submodule update --init --recursive
+cp .env.example .env
 ```
 
-Os comandos exigem ambiente apropriado e não foram executados aqui.
+No PowerShell, substitua `cp` por `Copy-Item .env.example .env`. Edite o `.env`: defina `ROUTES_API_KEY` com no mínimo 32 caracteres aleatórios e `GOOGLE_MAPS_API_KEY` se for usar mapas. **Não envie o .env ao Git.**
 
-## Onde começar
-docker-compose.yaml, .gitmodules, mongodb/.
+## Validar Compose sem ligar serviços
 
-## Cuidados
-Este repositório depende de submódulos e serviços relacionados. Não assumir que Docker Compose é seguro para produção.
+```bash
+docker compose -f docker-compose.yaml config --quiet
+docker compose -f docker-compose.yaml config --services
+```
 
-## Documentos
-[Requisitos](docs/REQUISITOS.md) · [Arquitetura](docs/ARQUITETURA.md) · [UML](docs/UML.puml) · [Plano de testes](docs/PLANO_TESTES.md) · [Contexto IA](AGENTS.md).
+O workflow de CI `validar-compose.yml` executa essa verificação com uma chave **fictícia** de teste, sem ligar Docker, criar banco ou publicar nada.
+
+## Executar ambiente didático (somente local)
+
+```bash
+docker compose -f docker-compose.yaml up --build -d
+docker compose -f docker-compose.yaml ps
+docker compose -f docker-compose.yaml logs --tail=100 nest next simulator
+```
+
+O frontend é acessível em `http://localhost:3001` e o NestJS em `http://localhost:3000`. As portas desses serviços e Mongo estão limitadas ao `127.0.0.1`.
+
+O Compose principal **corrige a pasta Go para `golang-simulador/`** e define comandos reais dos serviços. Antes, os Dockerfiles dos subprojetos ficavam apenas em `tail -f /dev/null`; isso não inicia a aplicação. A raiz importa Mongo e Kafka uma vez para evitar conflitos.
+
+## Segurança e limitações
+
+**Ambiente exclusivamente de desenvolvimento.** O exemplo MongoDB usa `root/root`; o Kafka tem listeners PLAINTEXT e portas expostas pelo submódulo. Não abra portas no roteador/firewall e não use essas credenciais/dados em produção. Os pins dos submódulos são commits específicos — `git submodule update --remote` pode alterar os códigos e requer nova validação.
+
+O GitHub Actions verifica configuração e checkout, **não** executa integração real de containers, Google Maps, Socket.IO ou eventos GPS. As dependências externas podem precisar de configuração e APIs válidas para funcionar.
+
+[Arquitetura](docs/ARQUITETURA.md) · [Requisitos](docs/REQUISITOS.md) · [UML](docs/UML.puml) · [Plano de testes](docs/PLANO_TESTES.md).
 
 ---
 
