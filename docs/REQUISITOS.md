@@ -13,7 +13,7 @@ Versão TRACK-COMPOSE 1.1.0 · 14/11/2026.
 
 ## Não funcionais
 
-- **RNF01:** restringir as portas Mongo, Nest e Next ao loopback do host no ambiente padrão.
+- **RNF01:** restringir as portas Mongo, Nest, Next, Kafka externo e Control Center ao loopback do host no ambiente padrão.
 - **RNF02:** ignorar `.env` e demais configurações sensíveis no Git.
 - **RNF03:** validar `docker compose config` no GitHub Actions, sem iniciar serviços nem volumes.
 - **RNF04:** documentação de risco de Mongo root/root e Kafka PLAINTEXT.
