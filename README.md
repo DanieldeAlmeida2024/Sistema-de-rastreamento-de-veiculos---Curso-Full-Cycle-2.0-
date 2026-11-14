@@ -54,3 +54,9 @@ Os submódulos apontam para commits específicos. Atualizações de cada depend�
 [Arquitetura](docs/ARQUITETURA.md) · [Requisitos](docs/REQUISITOS.md) · [UML](docs/UML.puml) · [Plano de testes](docs/PLANO_TESTES.md).
 
 Projeto desenvolvido a partir da [Imersão Full Cycle](https://imersao.fullcycle.com.br/). Diagrama de referência: [arquitetura_projeto.png](arquitetura_projeto.png).
+
+## Compatibilidade dos componentes fixados
+
+Esta revisão reúne o produtor NestJS e o simulador Go com o mesmo limite de **600 coordenadas** por rota (até 300 etapas do Google Maps). O produtor rejeita direções inválidas antes de gravar; o simulador recusa mensagens Kafka acima de **256 KiB** e direções excessivamente extensas. O workflow do repositório verifica automaticamente que o código dos submódulos fixados mantém esses contratos alinhados.
+
+Como os componentes são Git submodules, use `git submodule update --init --recursive` após atualizar o repositório pai; executar `git pull` dentro de um submódulo pode colocá-lo em outro commit, diferente da revisão testada. Não há homologação E2E nem deploy nesta atualização.
