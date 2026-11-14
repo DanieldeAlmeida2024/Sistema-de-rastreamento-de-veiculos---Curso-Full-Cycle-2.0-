@@ -10,7 +10,7 @@ O repositório pai é um **orquestrador de quatro submódulos Git**, mais MongoD
 | --- | --- | --- |
 | `nestjs-api/` | API REST, Google Maps, eventos e Socket.IO | `d65bff1ad157` |
 | `golang-simulador/` | Eventos de frete/posição e consumidor Kafka | `0cb1073df2d4` |
-| `next-frontend/` | Páginas de rotas e mapas Next.js/React | `3093a5a2e884` |
+| `next-frontend/` | Páginas de rotas e mapas Next.js/React | `89b66a567aca` |
 | `kafka/` | Kafka + ZooKeeper + ferramentas de desenvolvimento | `059c9095bdb0` |
 | `mongodb/` | MongoDB local com replica set de nó único | Arquivos neste repo |
 
@@ -44,3 +44,11 @@ Nesta revisão, os gitlinks de **NestJS** e **Go Simulator** apontam aos commits
 O produtor `RoutesService.create` valida o retorno de Google Directions antes de gravar dados e publica no máximo 600 coordenadas (300 etapas). O simulador recusa eventos JSON acima de 256 KiB e rotas acima de 600 pontos. Rotas inválidas ou excessivamente extensas precisam ser rejeitadas, corrigidas ou futuramente segmentadas. A verificação `tests/test_kafka_route_contract.py` impede divergência silenciosa desses limites nos submódulos fixados.
 
 Essa checagem é estática; **não** executa Kafka/Mongo reais nem prova a entrega de eventos entre os processos.
+
+## TRACK-COMPOSE 1.3.0 — NestJS e Next.js com credencial servidor-servidor
+
+O gitlink `next-frontend/` foi atualizado para `89b66a567aca07570bfa247baf245b4d1723a766`. O backend exige `x-routes-api-key` para ações e consultas em `/routes`; o servidor Next fornece a credencial `ROUTES_API_KEY` recebida do mesmo `.env` local do orquestrador.
+
+O navegador não recebe a chave em variáveis públicas. No entanto, a demonstração local ainda permite operações sem login quando `ALLOW_UNAUTHENTICATED_ROUTE_DEMO=true`, portanto **não é um controle de autorização real**. A CI verifica o mapeamento da chave nos dois contêineres e os binds de porta em loopback.
+
+**Pendente:** identidade de operador, autorização por rota, segurança do Socket.IO, limitação de consultas Google Maps, E2E e isolamento por ambiente antes de exposição pública.
