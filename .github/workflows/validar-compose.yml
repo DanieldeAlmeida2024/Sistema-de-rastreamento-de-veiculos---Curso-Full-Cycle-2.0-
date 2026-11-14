@@ -44,6 +44,9 @@ jobs:
           import json
           data = json.load(open("/tmp/track-compose.json", encoding="utf-8"))
           services = data["services"]
+          # A chave privada deve ser encaminhada ao Next apenas no servidor.
+          assert services["next"]["environment"]["ROUTES_API_KEY"] == services["nest"]["environment"]["ROUTES_API_KEY"], "Chave Nest/Next divergente"
+          assert services["next"]["environment"]["ALLOW_UNAUTHENTICATED_ROUTE_DEMO"] == "true", "Modo de laboratório não configurado"
           for service in ("mongo", "kafka", "control-center", "nest", "next"):
               for port in services[service].get("ports", []):
                   assert port["host_ip"] == "127.0.0.1", (

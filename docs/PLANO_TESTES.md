@@ -46,3 +46,14 @@ Nenhum destes testes E2E/SEC/OPS foi executado pela CI de configuração. **Dock
 | TRACK-C05 | O simulador valida rotas persistidas antes de publicar movimentos |
 
 O workflow invoca `python -m unittest discover -s tests -p 'test_kafka_route_contract.py' -v` depois de baixar os submódulos recursivamente. Esses testes conferem o código **dos SHAs fixados**, e não a ponta a ponta de uma entrega Kafka.
+
+## TRACK-COMPAT-02 — segredo privado e Next.js no Compose
+
+| ID | Contrato | Evidência |
+| --- | --- | --- |
+| TRACK-C06 | `nest` e `next` recebem a mesma `ROUTES_API_KEY` privada do Compose | Comparação de `services[...].environment` em JSON de `docker compose config` |
+| TRACK-C07 | `ALLOW_UNAUTHENTICATED_ROUTE_DEMO` só é ativado explicitamente na stack de laboratório | Asserção do valor `true` renderizado no Compose |
+| TRACK-C08 | Next e Nest permanecem vinculados a 127.0.0.1 no host | Verificação preexistente do CI de portas locais |
+| TRACK-C09 | Gitlink Next aponta para commit com testes de IDs, URLs e credenciais | Checkout dos submódulos e pipeline independente no repositório Next |
+
+Essas verificações não demonstram que uma instância pública esteja segura nem que o sistema completo esteja funcional. Não incluem tráfego real do Google Maps/Kafka/Mongo.

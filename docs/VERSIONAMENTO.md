@@ -26,3 +26,11 @@
 - Mantidos pins Next.js e Kafka, volumes e configuração Compose anterior.
 - Adicionada regressão automática dos limites cruzados em `tests/test_kafka_route_contract.py`.
 - Nenhuma modificação da infraestrutura ou execução de E2E, nenhum deploy. Falha Kafka depois de uma persistência ainda requer outbox/idempotência.
+
+## TRACK-COMPOSE 1.3.0 — Next.js/NestJS com chave privada (14/11/2026)
+
+- Atualizado gitlink `next-frontend/` para `89b66a567aca07570bfa247baf245b4d1723a766`, após CI aprovado no projeto filho.
+- A mesma `ROUTES_API_KEY` agora é passada para os servidores Nest e Next, sem exposição `NEXT_PUBLIC_`.
+- O modo de demonstração de rotas sem login é habilitado deliberadamente **somente nesta stack local**, cuja exposição ao host permanece em loopback.
+- Workflow Compose verifica alinhamento do segredo entre os dois serviços e o flag local, além de portas e contratos Kafka anteriores.
+- Continuam pendentes autenticação por operador, Socket.IO autorizado e testes E2E reais.

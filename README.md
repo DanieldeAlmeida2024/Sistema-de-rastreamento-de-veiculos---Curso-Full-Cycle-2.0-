@@ -60,3 +60,11 @@ Projeto desenvolvido a partir da [Imersão Full Cycle](https://imersao.fullcycle
 Esta revisão reúne o produtor NestJS e o simulador Go com o mesmo limite de **600 coordenadas** por rota (até 300 etapas do Google Maps). O produtor rejeita direções inválidas antes de gravar; o simulador recusa mensagens Kafka acima de **256 KiB** e direções excessivamente extensas. O workflow do repositório verifica automaticamente que o código dos submódulos fixados mantém esses contratos alinhados.
 
 Como os componentes são Git submodules, use `git submodule update --init --recursive` após atualizar o repositório pai; executar `git pull` dentro de um submódulo pode colocá-lo em outro commit, diferente da revisão testada. Não há homologação E2E nem deploy nesta atualização.
+
+## Next.js com chave privada do NestJS — integração de laboratório
+
+O Next.js agora compartilha a **mesma** `ROUTES_API_KEY` do NestJS como variável de ambiente **somente no contêiner servidor Next** (sem prefixo `NEXT_PUBLIC_`). Isso permite que consultas, criação e início de rotas cheguem aos endpoints protegidos do NestJS.
+
+Como não há login/autorização por usuário neste laboratório, o Compose define `ALLOW_UNAUTHENTICATED_ROUTE_DEMO=true` explicitamente **apenas para o ambiente local**. A porta do Next permanece vinculada a `127.0.0.1:3001` e a do Nest a `127.0.0.1:3000`. Nunca reutilize esse sinalizador num deploy público; substitua por autenticação e permissões por recurso.
+
+O submódulo `next-frontend/` foi atualizado para a versão com validação de IDs, tratamento de erros upstream, ausência de cache compartilhado e testes de contrato. Use `git submodule update --init --recursive` para obter o commit pinado.
