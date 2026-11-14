@@ -1,6 +1,6 @@
 # Plano de testes — orquestração Docker
 
-Versão TRACK-COMPOSE 1.1.0 · 14/11/2026.
+Versão TRACK-COMPOSE 1.2.0 · 14/11/2026.
 
 ## CI estrutural (executado)
 
@@ -34,3 +34,15 @@ O workflow inspeciona o JSON gerado pelo Docker Compose, verifica portas dos cin
 - **OPS-01:** medir tempo de bootstrap, estado de volumes, shutdown e recuperação após falha.
 
 Nenhum destes testes E2E/SEC/OPS foi executado pela CI de configuração. **Docker Compose válido não significa serviço funcional.**
+
+## TRACK-COMPAT-01 — acordo de mensagens entre submódulos
+
+| Caso | Critério |
+| --- | --- |
+| TRACK-C01 | Gitlink NestJS usa o código com limite de 600 pontos |
+| TRACK-C02 | Gitlink Go usa o mesmo limite de 600 pontos |
+| TRACK-C03 | O produtor valida o número de etapas antes de criar rota no Mongo |
+| TRACK-C04 | O simulador recusa mensagens acima de 256 KiB antes do parse JSON |
+| TRACK-C05 | O simulador valida rotas persistidas antes de publicar movimentos |
+
+O workflow invoca `python -m unittest discover -s tests -p 'test_kafka_route_contract.py' -v` depois de baixar os submódulos recursivamente. Esses testes conferem o código **dos SHAs fixados**, e não a ponta a ponta de uma entrega Kafka.
