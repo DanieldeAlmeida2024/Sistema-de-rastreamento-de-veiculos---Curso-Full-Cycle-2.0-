@@ -11,7 +11,7 @@ O repositório pai é um **orquestrador de quatro submódulos Git**, mais MongoD
 | `nestjs-api/` | API REST, Google Maps, eventos e Socket.IO | `d65bff1ad157` |
 | `golang-simulador/` | Eventos de frete/posição e consumidor Kafka | `0cb1073df2d4` |
 | `next-frontend/` | Páginas de rotas e mapas Next.js/React | `89b66a567aca` |
-| `kafka/` | Kafka + ZooKeeper + ferramentas de desenvolvimento | `059c9095bdb0` |
+| `kafka/` | Kafka + ZooKeeper + ferramentas de desenvolvimento | `a4b1cc83f7ba` |
 | `mongodb/` | MongoDB local com replica set de nó único | Arquivos neste repo |
 
 Gitlinks fixam SHAs: `git pull` do pai não atualiza automaticamente os submódulos para `main`. Use `git submodule update --init --recursive` para reproduzir a revisão do repositório pai.
@@ -52,3 +52,10 @@ O gitlink `next-frontend/` foi atualizado para `89b66a567aca07570bfa247baf245b4d
 O navegador não recebe a chave em variáveis públicas. No entanto, a demonstração local ainda permite operações sem login quando `ALLOW_UNAUTHENTICATED_ROUTE_DEMO=true`, portanto **não é um controle de autorização real**. A CI verifica o mapeamento da chave nos dois contêineres e os binds de porta em loopback.
 
 **Pendente:** identidade de operador, autorização por rota, segurança do Socket.IO, limitação de consultas Google Maps, E2E e isolamento por ambiente antes de exposição pública.
+
+## TRACK-COMPOSE 1.4.0 — sincronização de eventos nativos no Kafka Python
+
+- `kafka/`: novo pin `a4b1cc83f7baf72734e7786af2fa9b5a56dfffdb`.
+- A CLI genérica segue produzindo envelopes com `tipo/dados`; a nova CLI `publicar-rastreamento` produz no tópico `route` os eventos planos `RouteCreated` e `DeliveryStarted`, como NestJS e Go.
+- A verificação do repositório pai executa o serializer Kafka real do gitlink por `runpy`, valida o JSON e compara os limites de pontos com os contratos Nest/Go.
+- O broker continua uma pilha didática com PLAINTEXT sem SASL; a compatibilidade estática não comprova entrega no Kafka ou processamento em MongoDB.
