@@ -36,7 +36,7 @@ O Compose principal **corrige a pasta Go para `golang-simulador/`** e define com
 
 ## Segurança e limitações
 
-**Ambiente exclusivamente de desenvolvimento.** O exemplo MongoDB usa `root/root`; o Kafka tem listeners PLAINTEXT e portas expostas pelo submódulo. Não abra portas no roteador/firewall e não use essas credenciais/dados em produção. Os pins dos submódulos são commits específicos — `git submodule update --remote` pode alterar os códigos e requer nova validação.
+**Ambiente exclusivamente de desenvolvimento.** O exemplo MongoDB usa `root/root`; o Kafka mantém listeners PLAINTEXT, mas as portas externas 9094 e 9021 do submódulo agora ficam limitadas ao 127.0.0.1. Esse isolamento não substitui autenticação nem TLS. Não abra portas no roteador/firewall e não use essas credenciais/dados em produção. Os pins dos submódulos são commits específicos — `git submodule update --remote` pode alterar os códigos e requer nova validação.
 
 O GitHub Actions verifica configuração e checkout, **não** executa integração real de containers, Google Maps, Socket.IO ou eventos GPS. As dependências externas podem precisar de configuração e APIs válidas para funcionar.
 
