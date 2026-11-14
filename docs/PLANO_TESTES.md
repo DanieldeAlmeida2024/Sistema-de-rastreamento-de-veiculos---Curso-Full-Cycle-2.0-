@@ -20,7 +20,9 @@ docker compose -f docker-compose.yaml config --services
 | COMPOSE-01 | `docker compose config --quiet` | Código de saída 0; sintaxe e paths válidos |
 | COMPOSE-02 | Lista de serviços | `simulator`, `nest`, `next`, `mongo`, `kafka` presentes |
 | COMPOSE-03 | Startup | Comandos definidos para processos reais, sem `tail` |
-| COMPOSE-04 | Exposição local | Nest, Next e Mongo escutam somente em `127.0.0.1` |
+| COMPOSE-04 | Exposição local | Nest, Next, Mongo, Kafka externo e Control Center escutam somente em `127.0.0.1` |
+
+O workflow inspeciona o JSON gerado pelo Docker Compose, verifica portas dos cinco serviços expostos ao host e comandos de execução Go/Nest/Next. Isso ainda não envolve rede real.
 
 ## Testes de integração necessários antes de anunciar sistema funcional
 
