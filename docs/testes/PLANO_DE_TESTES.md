@@ -18,3 +18,7 @@ Versão **1.0.0**, 11/11/2026; código base `c41f00bb2a1e7adcaaf44176125dfd23ae8
 | SYS-10 | Inspecionar secrets | Nenhuma credencial real está no git | Pendente de execução |
 
 A matriz separa observações do código de hipóteses de aceite. Execute primeiro testes isolados com fixtures sintéticas, depois integração em ambiente efêmero e, por último, E2E autorizado. Registrar SHA, versões de serviços, logs sanitizados, data e estado PASS/FAIL/BLOCKED. Não usar um teste estrutural Python como evidência de uma integração de rede.
+
+## Conciliação de versões — 14/11/2026
+
+O submódulo `next-frontend` foi atualizado do commit `89b66a5` para `4fd5fa7`, 2 commits de documentação, para refletir a arquitetura e os testes atuais. Os SHAs de NestJS, Go e Kafka já correspondiam às suas branches principais; ver `docs/integracao/SUBMODULOS.md`. O fluxo completo Kafka→Go→NestJS→Next ainda requer homologação real e não é validado apenas por `docker compose config`.
