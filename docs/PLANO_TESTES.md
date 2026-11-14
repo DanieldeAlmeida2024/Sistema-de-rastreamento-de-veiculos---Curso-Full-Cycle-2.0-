@@ -57,3 +57,15 @@ O workflow invoca `python -m unittest discover -s tests -p 'test_kafka_route_con
 | TRACK-C09 | Gitlink Next aponta para commit com testes de IDs, URLs e credenciais | Checkout dos submódulos e pipeline independente no repositório Next |
 
 Essas verificações não demonstram que uma instância pública esteja segura nem que o sistema completo esteja funcional. Não incluem tráfego real do Google Maps/Kafka/Mongo.
+
+## TRACK-COMPAT-03 — evento Kafka Python, NestJS e Go
+
+| ID | Caso | Evidência automática |
+| --- | --- | --- |
+| TRACK-C10 | Publicador Python usa `RouteCreated` com `event,id,distance,directions` | Serializador real do submódulo Kafka executado sem broker |
+| TRACK-C11 | `DeliveryStarted` contém `event,route_id` | Serializador real comparado à variante Go |
+| TRACK-C12 | CLI envia nativamente ao tópico `route` sem envelope genérico | Inspeção do comando e do JSON gerado |
+| TRACK-C13 | Limite de 600 pontos alinhado em NestJS, Kafka e Go | Teste de contrato cruzado com rejeição de 601 pontos |
+| TRACK-C14 | Serializador Kafka limita a 256 KiB | Constante comparada ao consumidor Go |
+
+O CI verifica código fixado por gitlinks e não inicia broker. A confirmação real de consumo, preservação de offsets, latência e resposta a eventos inválidos depende de homologação E2E.
