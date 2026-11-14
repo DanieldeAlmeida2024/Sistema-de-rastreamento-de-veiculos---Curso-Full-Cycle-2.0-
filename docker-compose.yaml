@@ -56,6 +56,10 @@ services:
       - "127.0.0.1:3001:3000"
     environment:
       NEST_API_URL: http://nest:3000
+      # Credencial servidor-servidor, nunca uma variável NEXT_PUBLIC_*.
+      ROUTES_API_KEY: ${ROUTES_API_KEY:?Defina ROUTES_API_KEY no .env (32+ caracteres)}
+      # Demonstração sem login: exclusivamente na stack com portas host em loopback.
+      ALLOW_UNAUTHENTICATED_ROUTE_DEMO: "true"
       NEXT_PUBLIC_NEST_API_URL: http://localhost:3000
       NEXT_PUBLIC_NEXT_API_URL: http://localhost:3001/api
       NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
